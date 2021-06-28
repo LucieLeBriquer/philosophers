@@ -6,7 +6,7 @@
 /*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 20:10:46 by lucie             #+#    #+#             */
-/*   Updated: 2021/06/28 20:50:46 by lucie            ###   ########.fr       */
+/*   Updated: 2021/06/28 21:19:39 by lucie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ int	main(int argc, char **argv)
 	else
 		print_parsing(option);
 	init_table(&table, option);
-	return (0);
+	return (SUCCESS);
 }

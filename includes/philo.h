@@ -6,7 +6,7 @@
 /*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 20:10:42 by lucie             #+#    #+#             */
-/*   Updated: 2021/06/28 21:15:00 by lucie            ###   ########.fr       */
+/*   Updated: 2021/06/28 21:42:46 by lucie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/time.h>
 
 typedef struct timeval t_time;
+typedef pthread_mutex_t t_mutex;
 
 typedef struct s_option
 {
@@ -38,17 +39,19 @@ typedef struct t_philo
 	int			nb_meals;
 	t_time		last_meal;
 	pthread_t	thread;
-	t_option	options; // useless si deja dans table ? a voir..
 }				t_philo;
 
 typedef struct s_table
 {
 	t_philo		*philo;
+	t_mutex		*forks;
 	t_option	option;
+	int			id;
 	//+ mutex pour chaque fourchette
 }				t_table;
 
 enum    {EATING, SLEEPING, THINKING};
+enum	{FORMAT = -2, SUCCESS = 0, ERROR_THREAD, ERROR_ALLOC, ERROR_TIME, ERROR_PARSE};
 
 /*
 **

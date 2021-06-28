@@ -6,7 +6,7 @@
 /*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 20:12:05 by lucie             #+#    #+#             */
-/*   Updated: 2021/06/28 20:46:56 by lucie            ###   ########.fr       */
+/*   Updated: 2021/06/28 21:22:44 by lucie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	print_help(void)
 	printf("  time_eat    time it takes to eat\n");
 	printf("  time_sleep  time it takes to sleep\n");
 	printf("  tot_meals   number of meals before ending the simulation\n");
-	return (0);
+	return (SUCCESS);
 }
 
 static int	ft_atoi(char *nptr)
@@ -33,21 +33,21 @@ static int	ft_atoi(char *nptr)
 	nb = 0;
 	i = 0;
 	if (nptr[0] < '0' || nptr[0] > '9')
-		return (-1);
+		return (FORMAT);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		nb = 10 * nb + (nptr[i] - '0');
 		i++;
 	}
 	if (nptr[i] != '\0' || nb > 2147483647 || i > 10)
-		return (-2);
+		return (FORMAT);
 	return ((int)nb);
 }
 
 int	parse_option(t_option *option, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
-		return (-1);
+		return (ERROR_PARSE);
 	option->nb = ft_atoi(argv[1]);
 	option->time_die = ft_atoi(argv[2]);
 	option->time_eat = ft_atoi(argv[3]);
@@ -55,8 +55,9 @@ int	parse_option(t_option *option, int argc, char **argv)
 	option->tot_meals = -1;
 	if (argc == 6)
 		option->tot_meals = ft_atoi(argv[5]);
-	if (option->nb == -2 || option->time_die == -2 || option->time_eat == -2
-			|| option->time_sleep == -2 || option->tot_meals == -2)
-		return (-2);
-	return (0);
+	if (option->nb == FORMAT || option->time_die == FORMAT
+			|| option->time_eat == FORMAT || option->time_sleep == FORMAT
+			|| option->tot_meals == FORMAT)
+		return (ERROR_PARSE);
+	return (SUCCESS);
 }
