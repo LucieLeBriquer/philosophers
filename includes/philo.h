@@ -6,7 +6,7 @@
 /*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 20:10:42 by lucie             #+#    #+#             */
-/*   Updated: 2021/06/28 20:50:59 by lucie            ###   ########.fr       */
+/*   Updated: 2021/06/28 21:10:26 by lucie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_option
 
 typedef struct t_philo
 {
+	int			id;
 	int			fork_left;
 	int			fork_right;
 	int			state;
@@ -45,6 +46,7 @@ typedef struct s_table
 	//+ mutex pour chaque fourchette
 }				t_table;
 
+enum    {EATING, SLEEPING, THINKING};
 
 /*
 **
