@@ -6,7 +6,7 @@
 /*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 20:10:42 by lucie             #+#    #+#             */
-/*   Updated: 2021/06/28 21:10:26 by lucie            ###   ########.fr       */
+/*   Updated: 2021/06/28 21:15:00 by lucie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+typedef struct timeval t_time;
 
 typedef struct s_option
 {
@@ -33,8 +35,8 @@ typedef struct t_philo
 	int			fork_left;
 	int			fork_right;
 	int			state;
-	int			last_meal;
 	int			nb_meals;
+	t_time		last_meal;
 	pthread_t	thread;
 	t_option	options; // useless si deja dans table ? a voir..
 }				t_philo;

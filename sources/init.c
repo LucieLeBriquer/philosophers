@@ -6,7 +6,7 @@
 /*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 20:47:32 by lucie             #+#    #+#             */
-/*   Updated: 2021/06/28 21:12:39 by lucie            ###   ########.fr       */
+/*   Updated: 2021/06/28 21:16:27 by lucie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	*stupid_routine(void *param)
 	t_philo	*philo;
 
 	philo = (t_philo *)param;
-	printf("i'm philo %d\n", philo->id);
+	printf("i'm philo %d, my last meal was at %ld:%ld\n", philo->id, philo->last_meal.tv_sec, philo->last_meal.tv_usec);
 	return (NULL);
 }
 
-static void	init_philosopher(t_philo *philo, int id, int time)
+static void	init_philosopher(t_philo *philo, int id, t_time time)
 {
 	philo->fork_left = -1;
 	philo->fork_right = -1;
@@ -34,8 +34,8 @@ static void	init_philosopher(t_philo *philo, int id, int time)
 
 int	init_table(t_table *table, t_option option)
 {
-	int	i;
-	struct timeval time;
+	int		i;
+	t_time	time;
 	
 	gettimeofday(&time, NULL);
 	printf("%ld %ld\n", time.tv_sec, time.tv_usec);
@@ -44,7 +44,7 @@ int	init_table(t_table *table, t_option option)
 		return (-1);
 	i = -1;
 	while (++i < option.nb)
-		init_philosopher(&(table->philo[i]), i, 0);
+		init_philosopher(&(table->philo[i]), i, time);
 	i = -1;
 	while (++i < option.nb)
 		pthread_join(table->philo[i].thread, NULL);
