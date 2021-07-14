@@ -6,7 +6,7 @@
 /*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 20:10:42 by lucie             #+#    #+#             */
-/*   Updated: 2021/06/28 21:42:46 by lucie            ###   ########.fr       */
+/*   Updated: 2021/07/14 17:57:16 by lucie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ typedef struct s_option
 	int		tot_meals;
 }			t_option;
 
+typedef struct s_table
+{
+	t_mutex		*forks;
+	t_option	option;
+}				t_table;
+
 typedef struct t_philo
 {
 	int			id;
@@ -37,28 +43,28 @@ typedef struct t_philo
 	int			fork_right;
 	int			state;
 	int			nb_meals;
+	t_table		*table;
 	t_time		last_meal;
 	pthread_t	thread;
 }				t_philo;
 
-typedef struct s_table
-{
-	t_philo		*philo;
-	t_mutex		*forks;
-	t_option	option;
-	int			id;
-	//+ mutex pour chaque fourchette
-}				t_table;
-
-enum    {EATING, SLEEPING, THINKING};
+enum    {EATING, SLEEPING, THINKING, DEAD};
 enum	{FORMAT = -2, SUCCESS = 0, ERROR_THREAD, ERROR_ALLOC, ERROR_TIME, ERROR_PARSE};
 
 /*
-**
+** Utils
 */
 
 int	parse_option(t_option *option, int argc, char **argv);
 int	print_help(void);
-int	init_table(t_table *table, t_option option);
+int	init_table(t_table *table, t_philo *philo, t_option option);
+
+/*
+** Routine
+*/
+
+void	*stupid_routine(void *param);
+void	*routine(void *param);
+
 
 #endif
