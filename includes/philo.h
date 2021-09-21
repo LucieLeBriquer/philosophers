@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/21 17:25:33 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/21 19:26:12 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,22 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+# define FORMAT -2
+# define SUCCESS 0
+# define ERROR_THREAD 1
+# define ERROR_ALLOC 2
+# define ERROR_TIME 3
+# define ERROR_PARSE 4
+# define EATING 5
+# define SLEEPING 6
+# define THINKING 7
+# define FORK 8
+# define DEAD 9
+# define CONTINUE 10
+# define STOP 11
 
-typedef struct timeval t_time;
-typedef pthread_mutex_t t_mutex;
+typedef struct timeval	t_time;
+typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_option
 {
@@ -51,10 +64,6 @@ typedef struct s_philo
 	pthread_t	thread;
 }				t_philo;
 
-enum    {EATING, SLEEPING, THINKING, FORK, DEAD};
-enum	{FORMAT = -2, SUCCESS = 0, ERROR_THREAD, ERROR_ALLOC, ERROR_TIME, ERROR_PARSE};
-enum	{CONTINUE, STOP};
-
 /*
 ** Utils
 */
@@ -67,13 +76,6 @@ long	get_time_stamp(t_time start);
 void	print_state(t_philo *philo, int full);
 int		check_dead(t_philo *philo);
 void	waiting(long to_wait, t_table *table);
-
-/*
-** Routine
-*/
-
-void	*stupid_routine(void *param);
 void	*routine(void *param);
-
 
 #endif

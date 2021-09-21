@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:37 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/21 16:55:43 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:37:57 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	parse_option(t_option *option, int argc, char **argv)
 	if (argc == 6)
 		option->tot_meals = ft_atoi(argv[5]);
 	if (option->nb == FORMAT || option->time_die == FORMAT
-			|| option->time_eat == FORMAT || option->time_sleep == FORMAT
-			|| option->tot_meals == FORMAT)
+		|| option->time_eat == FORMAT || option->time_sleep == FORMAT
+		|| option->tot_meals == FORMAT)
 		return (ERROR_PARSE);
 	return (SUCCESS);
 }

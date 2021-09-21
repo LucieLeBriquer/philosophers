@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/21 17:21:36 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/21 20:09:44 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ long	get_time_stamp(t_time start)
 {
 	long	t;
 	long	s;
-	
+
 	t = get_time();
 	s = start.tv_sec * 1000 + start.tv_usec / 1000;
 	return (t - s);
@@ -41,7 +41,11 @@ void	waiting(long to_wait, t_table *table)
 
 int	check_dead(t_philo *philo)
 {
-	if (get_time_stamp(philo->last_meal) > philo->table->option.time_die || !philo->table->all_alive)
+	//pthread_mutex_lock(&(philo->table->display));
+	//printf("last meal of %d was %ld ago\n", philo->id, get_time_stamp(philo->last_meal));
+	//pthread_mutex_unlock(&(philo->table->display));
+	if (get_time_stamp(philo->last_meal) > philo->table->option.time_die
+		|| !philo->table->all_alive)
 	{
 		philo->state = DEAD;
 		if (philo->table->all_alive)
