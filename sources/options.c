@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 20:12:05 by lucie             #+#    #+#             */
-/*   Updated: 2021/07/17 09:04:26 by lucie            ###   ########.fr       */
+/*   Created: 2021/09/21 16:53:37 by lle-briq          #+#    #+#             */
+/*   Updated: 2021/09/21 16:55:43 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	print_help(void)
 {
 	printf("usage:\t./philo n time_die time_eat time_sleep [tot_meals]\n\n");
 	printf("description:\n");
-	printf("  n           the number of philosophers ");
-	printf("(also the number of forks)\n");
+	printf("  n           the number of philosophers\n");
 	printf("  time_die    maximum time between two meals before starving\n");
 	printf("  time_eat    time it takes to eat\n");
 	printf("  time_sleep  time it takes to sleep\n");

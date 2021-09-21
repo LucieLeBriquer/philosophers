@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucie <lucie@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 20:10:42 by lucie             #+#    #+#             */
-/*   Updated: 2021/08/07 09:35:53 by lucie            ###   ########.fr       */
+/*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
+/*   Updated: 2021/09/21 17:25:33 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@ typedef struct s_table
 {
 	t_mutex		display;
 	t_mutex		*forks;
-	int			*forks_free;
 	t_option	option;
 	int			all_alive;
 }				t_table;
 
-typedef struct t_philo
+typedef struct s_philo
 {
 	int			id;
 	int			fork_left;
@@ -52,9 +51,9 @@ typedef struct t_philo
 	pthread_t	thread;
 }				t_philo;
 
-enum    {EATING, SLEEPING, THINKING, DEAD};
-enum	{FREE, UNAVAILABLE};
+enum    {EATING, SLEEPING, THINKING, FORK, DEAD};
 enum	{FORMAT = -2, SUCCESS = 0, ERROR_THREAD, ERROR_ALLOC, ERROR_TIME, ERROR_PARSE};
+enum	{CONTINUE, STOP};
 
 /*
 ** Utils
@@ -64,6 +63,10 @@ int		parse_option(t_option *option, int argc, char **argv);
 int		print_help(void);
 int		init_table(t_table *table, t_philo *philo, t_option option);
 long	get_time(void);
+long	get_time_stamp(t_time start);
+void	print_state(t_philo *philo, int full);
+int		check_dead(t_philo *philo);
+void	waiting(long to_wait, t_table *table);
 
 /*
 ** Routine
