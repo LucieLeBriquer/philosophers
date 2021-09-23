@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/21 20:09:44 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:34:03 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,36 @@ long	get_time_stamp(t_time start)
 	return (t - s);
 }
 
-void	waiting(long to_wait, t_table *table)
+int		everybody_alive(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->option.nb)
+	{
+		if (get_time_stamp(table->philos[i].last_meal) > table->option.time_die)
+		{
+			table->philos[i].state = DEAD;
+			table->all_alive = 0;
+			printf("-> philo[%d] last_meal %ld ago\n", i + 1, get_time_stamp(table->philos[i].last_meal));
+			return (STOP);
+		}
+	}
+	return (CONTINUE);
+}
+
+int	waiting(long to_wait, t_table *table)
 {
 	long int	current;
 
 	current = get_time();
-	while (get_time() < current + to_wait && table->all_alive)
+	while (get_time() < current + to_wait && everybody_alive(table) == CONTINUE)
 		usleep(100);
+	return (everybody_alive(table));
 }
 
 int	check_dead(t_philo *philo)
 {
-	//pthread_mutex_lock(&(philo->table->display));
-	//printf("last meal of %d was %ld ago\n", philo->id, get_time_stamp(philo->last_meal));
-	//pthread_mutex_unlock(&(philo->table->display));
 	if (get_time_stamp(philo->last_meal) > philo->table->option.time_die
 		|| !philo->table->all_alive)
 	{

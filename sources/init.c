@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/21 18:10:42 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:27:42 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	init_table_bis(t_table *table, t_philo *philo,
 	i = -1;
 	while (++i < option.nb)
 		pthread_mutex_destroy(&(table->forks[i]));
+	pthread_mutex_destroy(&(table->display));
 	return (SUCCESS);
 }
 
@@ -58,6 +59,7 @@ int	init_table(t_table *table, t_philo *philo, t_option option)
 	if (gettimeofday(&time, NULL))
 		return (ERROR_TIME);
 	philo = malloc(option.nb * sizeof(t_philo));
+	table->philos = philo;
 	table->forks = malloc(option.nb * sizeof(t_mutex));
 	table->option = option;
 	table->all_alive = 1;

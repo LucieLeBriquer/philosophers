@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/21 19:26:12 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:12:47 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ typedef struct s_option
 
 typedef struct s_table
 {
-	t_mutex		display;
-	t_mutex		*forks;
-	t_option	option;
-	int			all_alive;
-}				t_table;
+	t_mutex				display;
+	t_mutex				*forks;
+	t_option			option;
+	struct s_philo		*philos;
+	int					all_alive;
+}						t_table;
 
 typedef struct s_philo
 {
@@ -75,7 +76,7 @@ long	get_time(void);
 long	get_time_stamp(t_time start);
 void	print_state(t_philo *philo, int full);
 int		check_dead(t_philo *philo);
-void	waiting(long to_wait, t_table *table);
+int		waiting(long to_wait, t_table *table);
 void	*routine(void *param);
 
 #endif
