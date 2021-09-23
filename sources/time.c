@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/23 16:34:03 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:43:32 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		everybody_alive(t_table *table)
 		{
 			table->philos[i].state = DEAD;
 			table->all_alive = 0;
+			usleep(2000);
 			printf("-> philo[%d] last_meal %ld ago\n", i + 1, get_time_stamp(table->philos[i].last_meal));
 			return (STOP);
 		}

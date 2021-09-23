@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/23 16:37:06 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:48:05 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static int	start_sleeping(t_philo *philo)
 void	routine_loop(t_philo *philo)
 {
 	if (start_eating(philo) == STOP)
+	{
+		philo->state = DEAD;
 		return ;
+	}
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_left]));
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_right]));
 	philo->nb_meals++;
@@ -63,7 +66,10 @@ void	routine_loop(t_philo *philo)
 		return ;
 	}
 	if (start_sleeping(philo) == STOP)
+	{
+		philo->state = DEAD;
 		return ;
+	}
 	philo->state = THINKING;
 	print_state(philo, 0);
 }
@@ -75,6 +81,9 @@ void	*routine(void *param)
 	philo = (t_philo *)param;
 	while (philo->state != DEAD
 		&& philo->nb_meals != philo->table->option.tot_meals)
+	{
+		printf("philo[%d]_state = %d nb_meals %d tot %d\n", philo->id, philo->state, philo->nb_meals, philo->table->option.tot_meals);
 		routine_loop(philo);
+	}
 	return (NULL);
 }
