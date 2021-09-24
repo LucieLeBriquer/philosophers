@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/24 18:27:29 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/24 19:00:55 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,10 @@ long	get_time_stamp(t_time start)
 	return (t - s);
 }
 
-void	unlock_all_forks(t_table *table)
+int	everybody_alive(t_table *table)
 {
 	int	i;
-	
-	i = -1;
-	while (++i < table->option.nb)
-		pthread_mutex_unlock(&(table->forks[i]));
-}
-
-int		everybody_alive(t_table *table)
-{
-	int	i;
+	int	j;
 
 	i = -1;
 	while (++i < table->option.nb)
@@ -50,7 +42,9 @@ int		everybody_alive(t_table *table)
 		{
 			table->philos[i].state = DEAD;
 			table->all_alive = 0;
-			unlock_all_forks(table);
+			j = -1;
+			while (++j < table->option.nb)
+				pthread_mutex_unlock(&(table->forks[j]));
 			return (STOP);
 		}
 	}

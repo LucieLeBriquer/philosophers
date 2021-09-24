@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/24 17:38:19 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/24 19:00:43 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,5 @@ int		check_dead(t_philo *philo);
 int		waiting(long to_wait, t_table *table);
 void	*routine(void *param);
 int		everybody_alive(t_table *table);
-
-void	print_state_philo(t_philo *philo);
-void	print_breakpoint(t_philo *philo, char *msg);
 
 #endif

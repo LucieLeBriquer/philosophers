@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/24 18:23:19 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/24 19:01:11 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	init_table_bis(t_table *table, t_philo *philo,
 	t_option option, t_time time)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < option.nb)
 	{
