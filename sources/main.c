@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:49 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/23 16:40:48 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/24 18:56:08 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	print_state(t_philo *philo, int full)
 {
-	long	time_stamp;
-	int		id;
+	long		time_stamp;
+	int			id;
 
-	time_stamp = get_time_stamp(philo->start_time);
 	id = philo->id;
 	pthread_mutex_lock(&(philo->table->display));
+	time_stamp = get_time_stamp(philo->start_time);
 	if (full)
 		printf("-- Everyone has eaten enough --\n");
 	else if (philo->state == FORK)

@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/24 17:38:44 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/24 17:59:43 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_state_philo(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->table->display));
 	printf("PHILO %d at %ld\n\tState : %s\n\tStart time : %ld.%06ld\n", philo->id, get_time_stamp(philo->start_time), get_state(philo->state), philo->start_time.tv_sec, philo->start_time.tv_usec);
-	printf("\tLast meal : %ld.%06ld\n\tNumber of meals : %d\n", philo->last_meal.tv_sec, philo->last_meal.tv_usec, philo->nb_meals);
+	printf("\tLast meal :  %ld.%06ld\n\tNumber of meals : %d\n", philo->last_meal.tv_sec, philo->last_meal.tv_usec, philo->nb_meals);
 	pthread_mutex_unlock(&(philo->table->display));
 }
 
