@@ -1,8 +1,9 @@
 # Notes
 - fix leaks
-- ajout d'un mutex pour empêcher un philosophe de mourir et de commencer à manger au même moment?
+- ajout d'un mutex pour empêcher un philosophe de mourir et de commencer à manger au même moment -> ça fixerait le probleme de ` ./philo 4 310 200 100`
 - check quel délai mettre à la création des threads pour forcer la bonne répartition des fourchettes
 - quand on lance avec valgrind -> ralenti tout donc sometimes y a des morts
+- pour le bonus se renseigner sur les sémaphores (normalement ça ne change pas grand chose)
 
 # Correction
 ## Mandatory Part
@@ -18,7 +19,7 @@ If some tests don't work on your machine try to discuss it honestly before count
 - Check there's only one fork per philosopher.
 - Check if there is a mutex per form and that it's used to check the fork value and/or change it.
 - Check the output should never produce a scrambled view.
-- Chcke how the death of a philosopher is checked and if there is a mutex to protect that a philosopher dies and start eating at the same time.
+- Check how the death of a philosopher is checked and if there is a mutex to protect that a philosopher dies and start eating at the same time.
 
 ### Philo test
 - Do not test with more than 200 philosophers
@@ -30,7 +31,3 @@ If some tests don't work on your machine try to discuss it honestly before count
 - Test with `4 310 200 100`, a philosopher should die1
 - Test with 2 philosophers and check the different times (a death delayed by more than 10ms is unacceptable).
 - Test with your values to check all the rules. Check if a philosopher dies at the right time, if they don't steal forks, etc.
-
-# Notes sur les threads
-- Qu'est-ce qu'un thread ? Un thread est un sous-processus. A COMPLETER
-- pthread_join : pour que le programme principal attende la fin de l'exécution d'un thread

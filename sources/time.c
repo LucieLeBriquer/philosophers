@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 17:36:53 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/30 18:42:21 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int	everybody_alive(t_table *table)
 	{
 		if (get_time_stamp(table->philos[i].last_meal) > table->option.time_die)
 		{
-			table->philos[i].state = DEAD;
+			update_state(table->philos + i, DEAD);
 			table->all_alive = 0;
+			print_state(table->philos + i, 0);
 			j = -1;
 			while (++j < table->option.nb)
 				pthread_mutex_unlock(&(table->forks[j]));
@@ -59,18 +60,4 @@ int	waiting(long to_wait, t_table *table)
 	while (get_time() < current + to_wait && everybody_alive(table) == CONTINUE)
 		usleep(100);
 	return (everybody_alive(table));
-}
-
-int	check_dead(t_philo *philo)
-{
-	if (get_time_stamp(philo->last_meal) > philo->table->option.time_die
-		|| !philo->table->all_alive)
-	{
-		philo->state = DEAD;
-		if (philo->table->all_alive)
-			print_state(philo, 0);
-		philo->table->all_alive = 0;
-		return (1);
-	}
-	return (0);
 }

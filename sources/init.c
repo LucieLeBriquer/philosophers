@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 18:02:43 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/30 18:45:57 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,23 @@ static int	free_all(t_table *table)
 	return (ERROR_ALLOC);
 }
 
+int	all_alive_or_hungry(t_table *table)
+{
+	int	i;
+	int	ok;
+
+	if (everybody_alive(table) == STOP)
+		return (STOP);
+	ok = 0;
+	i = -1;
+	while (++i < table->option.nb)
+		if (table->philos[i].nb_meals == table->option.tot_meals)
+			ok++;
+	if (ok == table->option.nb)
+		return (STOP);
+	return (CONTINUE);
+}
+
 static int	init_table_bis(t_table *table, t_option option, t_time time)
 {
 	int		i;
@@ -54,6 +71,8 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 		if (pthread_create(&(philo->thread), NULL, &routine, philo))
 			return (ERROR_THREAD);
 	}
+	while (all_alive_or_hungry(table) == CONTINUE)
+		usleep(100);
 	i = -1;
 	while (++i < option.nb)
 	{

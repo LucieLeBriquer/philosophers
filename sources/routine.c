@@ -6,43 +6,41 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 17:57:00 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/30 18:45:34 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	update_state(t_philo *philo, int state)
+{
+	t_table	*table;
+
+	table = philo->table;
+	pthread_mutex_lock(&(table->display));
+	philo->state = state;
+	pthread_mutex_unlock(&(table->display));
+
+}
+
 void	get_forks(t_philo *philo, t_table *table)
 {
-	if (philo->fork_right == philo->fork_left)
-	{
-		philo->state = DEAD;
-		table->all_alive = 0;
-		return ;
-	}
-	philo->state = FORK;
+	update_state(philo, FORK);
 	pthread_mutex_lock(&(table->forks[philo->fork_left]));
 	print_state(philo, 0);
 	pthread_mutex_lock(&(table->forks[philo->fork_right]));
 	print_state(philo, 0);
-	if (!philo->table->all_alive)
-		return ;
-	philo->state = FORK;
-	philo->state = EATING;
 }
 
 static int	start_eating(t_philo *philo)
 {	
 	if (!philo->table->all_alive)
-		return (STOP);
+	 	return (STOP);
 	get_forks(philo, philo->table);
-	if (!philo->table->all_alive)
-	{
-		if (philo->state == DEAD)
-			print_state(philo, 0);
-		return (STOP);
-	}
+	update_state(philo, EATING);
 	gettimeofday(&(philo->last_meal), NULL);
+	if (!philo->table->all_alive)
+	 	return (STOP);
 	print_state(philo, 0);
 	return (waiting(philo->table->option.time_eat, philo->table));
 }
@@ -50,8 +48,8 @@ static int	start_eating(t_philo *philo)
 static int	start_sleeping(t_philo *philo)
 {
 	if (!philo->table->all_alive)
-		return (STOP);
-	philo->state = SLEEPING;
+	 	return (STOP);
+	update_state(philo, EATING);
 	print_state(philo, 0);
 	return (waiting(philo->table->option.time_sleep, philo->table));
 }
@@ -63,15 +61,15 @@ void	routine_loop(t_philo *philo)
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_left]));
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_right]));
 	philo->nb_meals++;
-	if (philo->nb_meals == philo->table->option.tot_meals)
-	{
-		philo->state = SLEEPING;
-		print_state(philo, 0);
-		return ;
-	}
+	// if (philo->nb_meals == philo->table->option.tot_meals)
+	// {
+	// 	update_state(philo, SLEEPING);
+	// 	print_state(philo, 0);
+	// 	return ;
+	// }
 	if (start_sleeping(philo) == STOP)
 		return ;
-	philo->state = THINKING;
+	update_state(philo, THINKING);
 	print_state(philo, 0);
 }
 
