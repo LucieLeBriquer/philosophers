@@ -1,6 +1,9 @@
 # Notes
 - fix leaks
 - ajout d'un mutex pour empêcher un philosophe de mourir et de commencer à manger au même moment?
+- probleme à partir de 6 threads, le prog return direct
+- probleme avec l'affichage, parfois rien en s'affiche, on dirait que ça ne vient pas du mutex
+- se renseigner sur pthread_join
 
 # Correction
 ## Mandatory Part
@@ -28,3 +31,7 @@ If some tests don't work on your machine try to discuss it honestly before count
 - Test with `4 310 200 100`, a philosopher should die1
 - Test with 2 philosophers and check the different times (a death delayed by more than 10ms is unacceptable).
 - Test with your values to check all the rules. Check if a philosopher dies at the right time, if they don't steal forks, etc.
+
+# Notes sur les threads
+- Qu'est-ce qu'un thread ? Un thread est un sous-processus. A COMPLETER
+- pthread_join : pour que le programme principal attende la fin de l'exécution d'un thread

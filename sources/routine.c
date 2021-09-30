@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/24 18:55:06 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/30 17:57:00 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	get_forks(t_philo *philo, t_table *table)
 		table->all_alive = 0;
 		return ;
 	}
+	philo->state = FORK;
 	pthread_mutex_lock(&(table->forks[philo->fork_left]));
+	print_state(philo, 0);
 	pthread_mutex_lock(&(table->forks[philo->fork_right]));
+	print_state(philo, 0);
 	if (!philo->table->all_alive)
 		return ;
 	philo->state = FORK;
-	print_state(philo, 0);
-	print_state(philo, 0);
 	philo->state = EATING;
 }
 
@@ -79,7 +80,8 @@ void	*routine(void *param)
 	t_philo	*philo;
 
 	philo = (t_philo *)param;
-	usleep(200 * (philo->id % 3));
+	if (philo->id % 2 == 0)
+		usleep(5000);
 	while (everybody_alive(philo->table) == CONTINUE
 		&& philo->nb_meals != philo->table->option.tot_meals)
 		routine_loop(philo);
