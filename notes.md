@@ -1,9 +1,8 @@
 # Notes
 - fix leaks
 - ajout d'un mutex pour empêcher un philosophe de mourir et de commencer à manger au même moment?
-- probleme à partir de 6 threads, le prog return direct
-- probleme avec l'affichage, parfois rien en s'affiche, on dirait que ça ne vient pas du mutex
-- se renseigner sur pthread_join
+- check quel délai mettre à la création des threads pour forcer la bonne répartition des fourchettes
+- quand on lance avec valgrind -> ralenti tout donc sometimes y a des morts
 
 # Correction
 ## Mandatory Part
