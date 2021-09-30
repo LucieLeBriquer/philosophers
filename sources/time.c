@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 18:42:21 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/30 19:01:13 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	everybody_alive(t_table *table)
 	{
 		if (get_time_stamp(table->philos[i].last_meal) > table->option.time_die)
 		{
-			update_state(table->philos + i, DEAD);
+			update_state(&(table->philos[i]), DEAD);
 			table->all_alive = 0;
 			print_state(table->philos + i, 0);
 			j = -1;

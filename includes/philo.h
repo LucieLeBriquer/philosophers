@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 18:45:44 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/09/30 18:58:24 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int		waiting(long to_wait, t_table *table);
 void	*routine(void *param);
 int		everybody_alive(t_table *table);
 void	update_state(t_philo *philo, int state);
+int		all_alive_or_hungry(t_table *table);
+
 
 /*
 ** Utils
