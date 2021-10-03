@@ -1,10 +1,9 @@
 # Notes
 - fix leaks
 - ajout d'un mutex pour empêcher un philosophe de mourir et de commencer à manger au même moment -> ça fixerait le probleme de `./philo 4 310 200 100`
-- check quel délai mettre à la création des threads pour forcer la bonne répartition des fourchettes
 - quand on lance avec valgrind -> ralenti tout donc sometimes y a des morts
 - pour le bonus se renseigner sur les sémaphores (normalement ça ne change pas grand chose)
-- encore des problèmes `./philo 5 800 200 200 7` -> un philo meurt
+- pourtant pas de soucis avec le `./philo 5 800 200 200 7` donc pb sur les conditions d'arrêt a priori
 
 # Correction
 ## Mandatory Part

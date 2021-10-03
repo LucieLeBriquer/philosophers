@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 19:01:13 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/03 16:50:27 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	everybody_alive(t_table *table)
 		{
 			update_state(&(table->philos[i]), DEAD);
 			table->all_alive = 0;
-			print_state(table->philos + i, 0);
+			print_state(table->philos + i);
 			j = -1;
 			while (++j < table->option.nb)
 				pthread_mutex_unlock(&(table->forks[j]));

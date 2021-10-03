@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 18:58:24 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/03 17:06:41 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,12 @@ int		print_help(void);
 int		init_table(t_table *table, t_philo *philo, t_option option);
 long	get_time(void);
 long	get_time_stamp(t_time start);
-void	print_state(t_philo *philo, int full);
+void	print_state(t_philo *philo);
 int		waiting(long to_wait, t_table *table);
 void	*routine(void *param);
 int		everybody_alive(t_table *table);
 void	update_state(t_philo *philo, int state);
-int		all_alive_or_hungry(t_table *table);
-
+int		all_alive_and_hungry(t_table *table);
 
 /*
 ** Utils

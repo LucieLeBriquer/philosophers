@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/03 13:45:37 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/03 16:56:50 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ static void	init_philosophers(t_table *table, t_time time)
 
 static int	free_all(t_table *table)
 {
+	int	i;
+
+	i = -1;
+	while (++i < table->option.nb)
+		pthread_mutex_destroy(&(table->forks[i]));
+	pthread_mutex_destroy(&(table->display));
 	if (table->philos)
 		free(table->philos);
 	if (table->forks)
@@ -41,7 +47,7 @@ static int	free_all(t_table *table)
 	return (ERROR_ALLOC);
 }
 
-int	all_alive_or_hungry(t_table *table)
+int	all_alive_and_hungry(t_table *table)
 {
 	int	i;
 	int	ok;
@@ -65,7 +71,6 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 	t_philo	*philo;
 
 	init_philosophers(table, time);
-	//print_table_state(table);
 	i = -1;
 	while (++i < option.nb)
 	{
@@ -73,7 +78,7 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 		if (pthread_create(&(philo->thread), NULL, &routine, philo))
 			return (ERROR_THREAD);
 	}
-	while (all_alive_or_hungry(table) == CONTINUE)
+	while (all_alive_and_hungry(table) == CONTINUE)
 		usleep(100);
 	i = -1;
 	while (++i < option.nb)
@@ -82,13 +87,6 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 		if (pthread_join(philo->thread, NULL))
 			return (ERROR_THREAD);
 	}
-	if (table->all_alive)
-		print_state(table->philos, 1);
-	//print_table_state(table);
-	i = -1;
-	while (++i < option.nb)
-		pthread_mutex_destroy(&(table->forks[i]));
-	pthread_mutex_destroy(&(table->display));
 	free_all(table);
 	return (SUCCESS);
 }
