@@ -38,10 +38,10 @@ fi
 
 function test1()
 {
-	printf "Testing $PHILO_PATH 1 800 200 200\t\t"
 	error=0
     for i in `seq 1 $1`;
     do
+		printf "\rTesting $PHILO_PATH 1 800 200 200\t\t%4d" $i
 		res1=$(timeout 5s $PHILO_PATH 1 800 200 200 | grep "die" | wc -l)
 		if [ "$res1" -ne "1" ]
 		then
@@ -51,18 +51,18 @@ function test1()
 
 	if [ "$error" -eq "0" ]
 	then
-		printf "${GREEN}[OK]${NC}\n"
+		printf "\rTesting $PHILO_PATH 1 800 200 200\t\t${GREEN}[OK]${NC}\n"
 	else
-		printf "${RED}[KO] $error${NC}\n"
+		printf "\rTesting $PHILO_PATH 1 800 200 200\t\t${RED}[KO] $error${NC}\n"
 	fi
 }
 
 function test2()
 {
-	printf "Testing $PHILO_PATH 5 800 200 200\t\t"
 	error=0
     for i in `seq 1 $1`;
     do
+		printf "\rTesting $PHILO_PATH 5 800 200 200\t\t%4d" $i
 		res2=$(timeout 5s $PHILO_PATH 5 800 200 200 | grep "die" | wc -l)
 		if [ "$res2" -ne "0" ]
 		then
@@ -72,19 +72,19 @@ function test2()
 
 	if [ "$error" -eq "0" ]
 	then
-		printf "${GREEN}[OK]${NC}\n"
+		printf "\rTesting $PHILO_PATH 5 800 200 200\t\t${GREEN}[OK]${NC}\n"
 	else
-		printf "${RED}[KO] $error${NC}\n"
+		printf "\rTesting $PHILO_PATH 5 800 200 200\t\t${RED}[KO] $error${NC}\n"
 	fi
 }
 
 function test3()
 {
-	printf "Testing $PHILO_PATH 5 800 200 200 7\t\t"
 	error=0
     for i in `seq 1 $1`;
     do
-		res3=$(timeout 7s $PHILO_PATH 5 800 200 200 7 | grep "enough" | wc -l)
+		printf "\rTesting $PHILO_PATH 5 800 200 200 7\t\t%4d" $i
+		res3=$(timeout 5s $PHILO_PATH 5 800 200 200 7 | grep "enough" | wc -l)
 		if [ "$res3" -ne "1" ]
 		then
 			error=$(($error + 1))
@@ -93,18 +93,18 @@ function test3()
 
 	if [ "$error" -eq "0" ]
 	then
-		printf "${GREEN}[OK]${NC}\n"
+		printf "\rTesting $PHILO_PATH 5 800 200 200 7\t\t${GREEN}[OK]${NC}\n"
 	else
-		printf "${RED}[KO] $error${NC}\n"
+		printf "\rTesting $PHILO_PATH 5 800 200 200 7\t\t${RED}[KO] $error${NC}\n"
 	fi
 }
 
 function test4()
 {
-	printf "Testing $PHILO_PATH 4 410 200 200\t\t"
 	error=0
     for i in `seq 1 $1`;
     do
+		printf "\rTesting $PHILO_PATH 4 410 200 200\t\t%4d" $i
 		res4=$(timeout 5s $PHILO_PATH 4 410 200 200 | grep "die" | wc -l)
 		if [ "$res4" -ne "0" ]
 		then
@@ -114,18 +114,18 @@ function test4()
 
 	if [ "$error" -eq "0" ]
 	then
-		printf "${GREEN}[OK]${NC}\n"
+		printf "\rTesting $PHILO_PATH 4 410 200 200\t\t${GREEN}[OK]${NC}\n"
 	else
-		printf "${RED}[KO] $error${NC}\n"
+		printf "\rTesting $PHILO_PATH 4 410 200 200\t\t${RED}[KO] $error${NC}\n"
 	fi
 }
 
 function test5()
 {
-	printf "Testing $PHILO_PATH 4 310 200 100\t\t"
 	error=0
     for i in `seq 1 $1`;
     do
+		printf "\rTesting $PHILO_PATH 4 310 200 100\t\t%4d" $i
 		res5=$(timeout 5s $PHILO_PATH 4 310 200 100 | grep "die" | wc -l)
 		if [ "$res5" -ne "1" ]
 		then
@@ -135,10 +135,18 @@ function test5()
 
 	if [ "$error" -eq "0" ]
 	then
-		printf "${GREEN}[OK]${NC}\n"
+		printf "\rTesting $PHILO_PATH 4 310 200 100\t\t${GREEN}[OK]${NC}\n"
 	else
-		printf "${RED}[KO] $error${NC}\n"
+		printf "\rTesting $PHILO_PATH 4 310 200 100\t\t${RED}[KO] $error${NC}\n"
 	fi
+}
+
+function estimated_time()
+{
+	tot=$((21*$1))
+	min=$((tot/60))
+	sec=$((tot-60*min))
+	printf "Estimated time : $min minutes and $sec seconds\n"
 }
 
 ## main
@@ -146,9 +154,12 @@ function test5()
 re='^[0-9]+$'
 if [[ $1 =~ $re ]]
 then
-	#test1 $1
-	#test2 $1
+	estimated_time $1
+	test1 $1
+	test2 $1
 	test3 $1
-	#test4 $1
-	#test5 $1
+	test4 $1
+	test5 $1
+else
+	display_help
 fi
