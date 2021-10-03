@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/09/30 19:09:20 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/03 13:45:37 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	all_alive_or_hungry(t_table *table)
 	ok = 0;
 	i = -1;
 	while (++i < table->option.nb)
-		if (table->philos[i].nb_meals == table->option.tot_meals)
+		if (table->philos[i].nb_meals >= table->option.tot_meals
+			&& table->option.tot_meals != -1)
 			ok++;
 	if (ok == table->option.nb)
 		return (STOP);
@@ -64,6 +65,7 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 	t_philo	*philo;
 
 	init_philosophers(table, time);
+	//print_table_state(table);
 	i = -1;
 	while (++i < option.nb)
 	{
@@ -82,6 +84,7 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 	}
 	if (table->all_alive)
 		print_state(table->philos, 1);
+	//print_table_state(table);
 	i = -1;
 	while (++i < option.nb)
 		pthread_mutex_destroy(&(table->forks[i]));

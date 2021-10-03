@@ -1,9 +1,10 @@
 # Notes
 - fix leaks
-- ajout d'un mutex pour empêcher un philosophe de mourir et de commencer à manger au même moment -> ça fixerait le probleme de ` ./philo 4 310 200 100`
+- ajout d'un mutex pour empêcher un philosophe de mourir et de commencer à manger au même moment -> ça fixerait le probleme de `./philo 4 310 200 100`
 - check quel délai mettre à la création des threads pour forcer la bonne répartition des fourchettes
 - quand on lance avec valgrind -> ralenti tout donc sometimes y a des morts
 - pour le bonus se renseigner sur les sémaphores (normalement ça ne change pas grand chose)
+- encore des problèmes `./philo 5 800 200 200 7` -> un philo meurt
 
 # Correction
 ## Mandatory Part
@@ -28,6 +29,6 @@ If some tests don't work on your machine try to discuss it honestly before count
 - Test with `5 800 200 200`, no one should die!
 - Test with `5 800 200 200 7`, no one should die and the simulation should stop when all the philosopher has eaten at least 7 times each.
 - Test with `4 410 200 200`, no one should die!
-- Test with `4 310 200 100`, a philosopher should die1
+- Test with `4 310 200 100`, a philosopher should die!
 - Test with 2 philosophers and check the different times (a death delayed by more than 10ms is unacceptable).
 - Test with your values to check all the rules. Check if a philosopher dies at the right time, if they don't steal forks, etc.
