@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/03 16:56:50 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/03 17:58:19 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 	}
 	while (all_alive_and_hungry(table) == CONTINUE)
 		usleep(100);
+	//print_table_state(table);
 	i = -1;
 	while (++i < option.nb)
 	{
