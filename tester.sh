@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    tester.sh                                          :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/10/03 17:52:18 by lle-briq          #+#    #+#              #
+#    Updated: 2021/10/03 17:52:19 by lle-briq         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #!/bin/bash
 
 PHILO_PATH=./philo
@@ -143,7 +155,7 @@ function test5()
 
 function estimated_time()
 {
-	tot=$((21*$1))
+	tot=$((16*$1))
 	min=$((tot/60))
 	sec=$((tot-60*min))
 	printf "Estimated time : $min minutes and $sec seconds\n"
