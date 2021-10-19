@@ -25,7 +25,7 @@ _OK			= [\033[32mOK\033[0m]
 
 all			: $(NAME)
 
-$(NAME)		: $(OBJS) $(OBJS_UTILS) $(INCS)
+$(NAME)		: $(OBJS) $(INCS)
 			@$(CC) $(OBJS) $(MAIN_INC) -o $(NAME)
 			@echo "$(_OK) $(NAME_SHORT) compiled"
 
