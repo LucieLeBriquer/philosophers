@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/03 17:58:09 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/07 12:35:05 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	*routine(void *param)
 
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0)
-		usleep(5000);
+		usleep(1000); // à vérifier
 	while (all_alive_and_hungry(philo->table) == CONTINUE)
 		routine_loop(philo);
 	return (NULL);
