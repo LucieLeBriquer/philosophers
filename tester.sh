@@ -24,6 +24,14 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+UNAME=$(uname -s)
+if [ $UNAME == "Darwin" ]
+then
+	TIMEOUT="gtimeout"
+else
+	TIMEOUT="timeout"
+fi
+
 ## help
 
 function display_help()
@@ -54,7 +62,7 @@ function test1()
     for i in `seq 1 $1`;
     do
 		printf "\rTesting $PHILO_PATH 1 800 200 200\t\t%4d" $i
-		res1=$(timeout 5s $PHILO_PATH 1 800 200 200 | grep "die" | wc -l)
+		res1=$($TIMEOUT 5s $PHILO_PATH 1 800 200 200 | grep "die" | wc -l)
 		if [ "$res1" -ne "1" ]
 		then
 			error=$(($error + 1))
@@ -75,7 +83,7 @@ function test2()
     for i in `seq 1 $1`;
     do
 		printf "\rTesting $PHILO_PATH 5 800 200 200\t\t%4d" $i
-		res2=$(timeout 5s $PHILO_PATH 5 800 200 200 | grep "die" | wc -l)
+		res2=$($TIMEOUT 5s $PHILO_PATH 5 800 200 200 | grep "die" | wc -l)
 		if [ "$res2" -ne "0" ]
 		then
 			error=$(($error + 1))
@@ -96,7 +104,7 @@ function test3()
     for i in `seq 1 $1`;
     do
 		printf "\rTesting $PHILO_PATH 5 800 200 200 7\t\t%4d" $i
-		res3=$(timeout 5s $PHILO_PATH 5 800 200 200 7 | grep "enough" | wc -l)
+		res3=$($TIMEOUT 5s $PHILO_PATH 5 800 200 200 7 | grep "enough" | wc -l)
 		if [ "$res3" -ne "1" ]
 		then
 			error=$(($error + 1))
@@ -117,7 +125,7 @@ function test4()
     for i in `seq 1 $1`;
     do
 		printf "\rTesting $PHILO_PATH 4 410 200 200\t\t%4d" $i
-		res4=$(timeout 5s $PHILO_PATH 4 410 200 200 | grep "die" | wc -l)
+		res4=$($TIMEOUT 5s $PHILO_PATH 4 410 200 200 | grep "die" | wc -l)
 		if [ "$res4" -ne "0" ]
 		then
 			error=$(($error + 1))
@@ -138,7 +146,7 @@ function test5()
     for i in `seq 1 $1`;
     do
 		printf "\rTesting $PHILO_PATH 4 310 200 100\t\t%4d" $i
-		res5=$(timeout 5s $PHILO_PATH 4 310 200 100 | grep "die" | wc -l)
+		res5=$($TIMEOUT 5s $PHILO_PATH 4 310 200 100 | grep "die" | wc -l)
 		if [ "$res5" -ne "1" ]
 		then
 			error=$(($error + 1))

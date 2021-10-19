@@ -80,7 +80,6 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 	}
 	while (all_alive_and_hungry(table) == CONTINUE)
 		usleep(100);
-	//print_table_state(table);
 	i = -1;
 	while (++i < option.nb)
 	{

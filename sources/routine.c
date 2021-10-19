@@ -57,7 +57,7 @@ void	*routine(void *param)
 
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0)
-		usleep(1000); // à vérifier
+		usleep(1000);
 	while (all_alive_and_hungry(philo->table) == CONTINUE)
 		routine_loop(philo);
 	return (NULL);

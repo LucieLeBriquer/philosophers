@@ -50,10 +50,10 @@ void	print_philo_state(t_philo *philo, t_table *table)
 	pthread_mutex_lock(&(table->display));
 	printf("  Philo %d [%s]", philo->id, get_state(philo->state));
 	printf("  (%d,%d)\n", philo->fork_left, philo->fork_right);
-	printf("    start_time : %ld.%ld\n", philo->start_time.tv_sec,
-		philo->start_time.tv_usec);
-	printf("    last_meal  : %ld.%ld\n", philo->last_meal.tv_sec,
-		philo->last_meal.tv_usec);
+	printf("    start_time : %ld.%ld\n", (long)philo->start_time.tv_sec,
+		(long)philo->start_time.tv_usec);
+	printf("    last_meal  : %ld.%ld\n", (long)philo->last_meal.tv_sec,
+		(long)philo->last_meal.tv_usec);
 	printf("    nb_meals   : %d\n", philo->nb_meals);
 	printf("    table      : %p\n", philo->table);
 	pthread_mutex_unlock(&(table->display));
