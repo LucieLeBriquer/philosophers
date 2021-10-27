@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/07 12:35:05 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/27 18:44:32 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,23 @@ static int	start_sleeping(t_philo *philo)
 	return (waiting(philo->table->option.time_sleep, philo->table));
 }
 
+static void	routine_one(t_philo *philo)
+{
+	update_state(philo, FORK);
+	pthread_mutex_lock(&(philo->table->forks[philo->fork_left]));
+	print_state(philo);
+	waiting(philo->table->option.time_die, philo->table);
+	update_state(philo, DEAD);
+	pthread_mutex_unlock(&(philo->table->forks[philo->fork_left]));
+}
+
 void	routine_loop(t_philo *philo)
 {
+	if (philo->fork_left == philo->fork_right)
+	{
+		routine_one(philo);
+		return ;
+	}
 	if (start_eating(philo) == STOP)
 		return ;
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_left]));
@@ -57,7 +72,7 @@ void	*routine(void *param)
 
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(500 * philo->table->option.time_eat);
 	while (all_alive_and_hungry(philo->table) == CONTINUE)
 		routine_loop(philo);
 	return (NULL);
