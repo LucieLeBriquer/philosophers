@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/27 18:44:32 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/27 19:09:13 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	get_forks(t_philo *philo, t_table *table)
 {
+	printf("heyf %d\n", philo->id);
 	pthread_mutex_lock(&(table->forks[philo->fork_left]));
 	print_state(philo);
+	printf("heyff %d\n", philo->id);
 	pthread_mutex_lock(&(table->forks[philo->fork_right]));
 	print_state(philo);
 }
@@ -55,6 +57,7 @@ void	routine_loop(t_philo *philo)
 		routine_one(philo);
 		return ;
 	}
+	printf("hey %d\n", philo->id);
 	if (start_eating(philo) == STOP)
 		return ;
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_left]));

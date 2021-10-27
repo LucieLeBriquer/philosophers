@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/03 17:58:19 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/27 18:51:30 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 		philo = &(table->philos[i]);
 		if (pthread_join(philo->thread, NULL))
 			return (ERROR_THREAD);
+		printf("thread %d has ended\n", i);
 	}
 	free_all(table);
 	return (SUCCESS);
