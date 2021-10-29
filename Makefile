@@ -1,4 +1,4 @@
-CC			= clang -Wall -Wextra -Werror -pthread #-fsanitize=thread -g
+CC			= clang -Wall -Wextra -Werror -pthread -fsanitize=thread -g
 RM			= rm -rf
 NAME		= ./philo
 NAME_SHORT	= philo

@@ -35,16 +35,20 @@ int	everybody_alive(t_table *table)
 	int	i;
 
 	i = -1;
+	pthread_mutex_lock(&(table->display));
 	while (++i < table->option.nb)
 	{
 		if (get_time_stamp(table->philos[i].last_meal) > table->option.time_die)
 		{
-			update_state(&(table->philos[i]), DEAD);
+			//update_state(&(table->philos[i]), DEAD);
+			table->philos[i].state = DEAD;
 			table->all_alive = 0;
+			pthread_mutex_unlock(&(table->display));
 			print_state(table->philos + i);
 			return (STOP);
 		}
 	}
+	pthread_mutex_unlock(&(table->display));
 	return (CONTINUE);
 }
 

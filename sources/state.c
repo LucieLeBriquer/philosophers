@@ -69,13 +69,11 @@ void	print_state(t_philo *philo)
 	int			id;
 
 	pthread_mutex_lock(&(philo->table->display));
-	if (print_end)
+	if (!print_end)
 	{
-		pthread_mutex_unlock(&(philo->table->display));
-		return ;
+		id = philo->id;
+		time_stamp = get_time_stamp(philo->start_time);
+		print_state_msg(philo, time_stamp, id, &print_end);
 	}
-	id = philo->id;
-	time_stamp = get_time_stamp(philo->start_time);
-	print_state_msg(philo, time_stamp, id, &print_end);
 	pthread_mutex_unlock(&(philo->table->display));
 }

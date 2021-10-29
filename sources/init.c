@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/27 18:51:30 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/29 18:43:59 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ int	all_alive_and_hungry(t_table *table)
 
 	if (everybody_alive(table) == STOP)
 		return (STOP);
+	pthread_mutex_lock(&(table->display));	
 	ok = 0;
 	i = -1;
 	while (++i < table->option.nb)
 		if (table->philos[i].nb_meals >= table->option.tot_meals
 			&& table->option.tot_meals != -1)
 			ok++;
+	pthread_mutex_unlock(&(table->display));
 	if (ok == table->option.nb)
 		return (STOP);
 	return (CONTINUE);
@@ -92,6 +94,26 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 	return (SUCCESS);
 }
 
+//TO DELETE
+void	print_addresses(t_table *table)
+{
+	printf("&table %p\n", table);
+	printf("&table->all_alive %p\n", &(table->all_alive));
+	printf("&table->philos %p\n", &(table->philos));
+	printf("&table->forks %p\n", &(table->forks));
+	printf("&table->option %p\n", &(table->option));
+	int	i = -1;
+	while (++i < table->option.nb)
+	{
+		printf("&table->philos[%d] %p\n", i, &(table->philos[i]));
+		printf("    &philos[%d]->id %p\n", i, &(table->philos[i].id));
+		printf("    &philos[%d]->fl %p\n", i, &(table->philos[i].fork_left));
+		printf("    &philos[%d]->fr %p\n", i, &(table->philos[i].fork_right));
+		printf("    &philos[%d]->state %p\n", i, &(table->philos[i].state));
+		printf("    &philos[%d]->nb_meals %p\n", i, &(table->philos[i].nb_meals));
+	}
+}
+
 int	init_table(t_table *table, t_philo *philo, t_option option)
 {
 	int		i;
@@ -104,6 +126,7 @@ int	init_table(t_table *table, t_philo *philo, t_option option)
 	table->forks = malloc(option.nb * sizeof(t_mutex));
 	table->option = option;
 	table->all_alive = 1;
+	//print_addresses(table);
 	if (!philo || !table->forks)
 		return (free_all(table));
 	i = -1;
