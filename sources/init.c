@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:56 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/29 18:43:59 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/11/22 16:16:45 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ static void	init_philosophers(t_table *table, t_time time)
 	{
 		philo = &(table->philos[i]);
 		philo->fork_left = i;
-		philo->fork_right = (i + 1) % (table->option.nb);
+		philo->fork_right = i + 1;
+		if (i + 1 == table->option.nb)
+		{
+			philo->fork_left = 0;
+			philo->fork_right = i;
+		}
 		philo->state = THINKING;
 		philo->last_meal = time;
 		philo->start_time = time;
@@ -39,7 +44,10 @@ static int	free_all(t_table *table)
 	i = -1;
 	while (++i < table->option.nb)
 		pthread_mutex_destroy(&(table->forks[i]));
-	pthread_mutex_destroy(&(table->display));
+	pthread_mutex_destroy(&(table->m_display));
+	pthread_mutex_destroy(&(table->m_all_alive));
+	pthread_mutex_destroy(&(table->m_state));
+	pthread_mutex_destroy(&(table->m_nb_meals));
 	if (table->philos)
 		free(table->philos);
 	if (table->forks)
@@ -51,17 +59,24 @@ int	all_alive_and_hungry(t_table *table)
 {
 	int	i;
 	int	ok;
+	int	meals;
+	int	nb_meals;
 
 	if (everybody_alive(table) == STOP)
 		return (STOP);
-	pthread_mutex_lock(&(table->display));	
+	pthread_mutex_lock(&(table->m_display));
+	meals = table->option.tot_meals;
+	pthread_mutex_unlock(&(table->m_display));
 	ok = 0;
 	i = -1;
 	while (++i < table->option.nb)
-		if (table->philos[i].nb_meals >= table->option.tot_meals
-			&& table->option.tot_meals != -1)
+	{
+		pthread_mutex_lock(&(table->m_nb_meals));
+		nb_meals = table->philos[i].nb_meals;
+		pthread_mutex_unlock(&(table->m_nb_meals));
+		if (nb_meals >= meals && meals != -1)
 			ok++;
-	pthread_mutex_unlock(&(table->display));
+	}
 	if (ok == table->option.nb)
 		return (STOP);
 	return (CONTINUE);
@@ -114,6 +129,26 @@ void	print_addresses(t_table *table)
 	}
 }
 
+void	print_mutex_add(t_table *table)
+{
+	printf("&table->m_display %p\n", &(table->m_display));
+	printf("&table->m_all_alive %p\n", &(table->m_all_alive));
+	printf("&table->m_state %p\n", &(table->m_state));
+	printf("&table->m_nb_meals %p\n", &(table->m_nb_meals));
+	int	i = -1;
+	while (++i < table->option.nb)
+		printf("&table->forks[%d] %p\n", i, &(table->forks[i]));
+}
+// END DELETE
+
+static void	init_global_mutex(t_table *table)
+{
+	pthread_mutex_init(&(table->m_display), NULL);
+	pthread_mutex_init(&(table->m_all_alive), NULL);
+	pthread_mutex_init(&(table->m_state), NULL);
+	pthread_mutex_init(&(table->m_nb_meals), NULL);
+}
+
 int	init_table(t_table *table, t_philo *philo, t_option option)
 {
 	int		i;
@@ -132,6 +167,7 @@ int	init_table(t_table *table, t_philo *philo, t_option option)
 	i = -1;
 	while (++i < option.nb)
 		pthread_mutex_init(&(table->forks[i]), NULL);
-	pthread_mutex_init(&(table->display), NULL);
+	init_global_mutex(table);
+	print_mutex_add(table);
 	return (init_table_bis(table, option, time));
 }

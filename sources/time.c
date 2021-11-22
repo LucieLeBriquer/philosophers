@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/27 18:37:53 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:41:33 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,25 @@ long	get_time_stamp(t_time start)
 
 int	everybody_alive(t_table *table)
 {
-	int	i;
+	int		i;
+	t_philo	*philo;
 
 	i = -1;
-	pthread_mutex_lock(&(table->display));
 	while (++i < table->option.nb)
 	{
-		if (get_time_stamp(table->philos[i].last_meal) > table->option.time_die)
+		philo = table->philos + i;
+		if (get_time_stamp(philo->last_meal) > table->option.time_die)
 		{
-			//update_state(&(table->philos[i]), DEAD);
-			table->philos[i].state = DEAD;
+			pthread_mutex_lock(&(table->m_state));
+			philo->state = DEAD;
+			pthread_mutex_unlock(&(table->m_state));
+			pthread_mutex_lock(&(table->m_all_alive));
 			table->all_alive = 0;
-			pthread_mutex_unlock(&(table->display));
-			print_state(table->philos + i);
+			pthread_mutex_unlock(&(table->m_all_alive));
+			print_state(philo);
 			return (STOP);
 		}
 	}
-	pthread_mutex_unlock(&(table->display));
 	return (CONTINUE);
 }
 

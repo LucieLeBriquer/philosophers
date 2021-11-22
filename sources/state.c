@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:53:49 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/03 17:09:09 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/30 16:59:00 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,48 +17,62 @@ void	update_state(t_philo *philo, int state)
 	t_table	*table;
 
 	table = philo->table;
-	pthread_mutex_lock(&(table->display));
+	pthread_mutex_lock(&(table->m_state));
 	if (philo->state != DEAD)
 	{
 		philo->state = state;
 		if (state == EATING)
 			gettimeofday(&(philo->last_meal), NULL);
+		pthread_mutex_unlock(&(table->m_state));
+		return ;
 	}
-	pthread_mutex_unlock(&(table->display));
+	pthread_mutex_unlock(&(table->m_state));
 }
 
 static int	everyone_is_full(t_table *table)
 {
 	int	i;
+	int	tot_meals;
+	int	philo_meals;
 
 	i = -1;
+	tot_meals = table->option.tot_meals;
 	while (++i < table->option.nb)
-		if (table->philos[i].nb_meals < table->option.tot_meals
-			|| table->option.tot_meals == -1)
+	{
+		pthread_mutex_lock(&(table->m_nb_meals));
+		philo_meals = table->philos[i].nb_meals;
+		pthread_mutex_unlock(&(table->m_nb_meals));
+		if (philo_meals < tot_meals || tot_meals == -1)
 			return (0);
+	}
 	return (1);
 }
 
 static void	print_state_msg(t_philo *philo, long time_stamp, int id,
 	int *print_end)
 {
+	int	state;
+
+	pthread_mutex_lock(&(philo->table->m_state));
+	state = philo->state;
+	pthread_mutex_unlock(&(philo->table->m_state));
 	if (everyone_is_full(philo->table))
 	{
 		printf("-- Everyone has eaten enough --\n");
 		*print_end = 1;
 	}
-	else if (philo->state == DEAD)
+	else if (state == DEAD)
 	{
 		printf("%5ld\t%d died\n", time_stamp, id);
 		*print_end = 1;
 	}
-	else if (philo->state == FORK && philo->table->all_alive)
+	else if (state == FORK && everybody_alive(philo->table))
 		printf("%5ld\t%d has taken a fork\n", time_stamp, id);
-	else if (philo->state == EATING)
+	else if (state == EATING)
 		printf("%5ld\t%d is eating\n", time_stamp, id);
-	else if (philo->state == SLEEPING)
+	else if (state == SLEEPING)
 		printf("%5ld\t%d is sleeping\n", time_stamp, id);
-	else if (philo->state == THINKING)
+	else if (state == THINKING)
 		printf("%5ld\t%d is thinking\n", time_stamp, id);
 }
 
@@ -68,12 +82,12 @@ void	print_state(t_philo *philo)
 	long		time_stamp;
 	int			id;
 
-	pthread_mutex_lock(&(philo->table->display));
+	pthread_mutex_lock(&(philo->table->m_display));
 	if (!print_end)
 	{
 		id = philo->id;
 		time_stamp = get_time_stamp(philo->start_time);
 		print_state_msg(philo, time_stamp, id, &print_end);
 	}
-	pthread_mutex_unlock(&(philo->table->display));
+	pthread_mutex_unlock(&(philo->table->m_display));
 }

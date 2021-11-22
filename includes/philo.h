@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/03 17:06:41 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/10/30 16:54:16 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ typedef struct s_option
 
 typedef struct s_table
 {
-	t_mutex				display;
+	t_mutex				m_display;
+	t_mutex				m_state;
+	t_mutex				m_all_alive;
+	t_mutex				m_nb_meals;
 	t_mutex				*forks;
 	t_option			option;
 	struct s_philo		*philos;
