@@ -70,6 +70,7 @@ void	print_table_state(t_table *table)
 	printf("  time_eat   : %d\n", table->option.time_eat);
 	printf("  time_sleep : %d\n", table->option.time_sleep);
 	printf("  all_alive  : %d\n", table->all_alive);
+	printf("  tot_meals  : %d\n", table->option.tot_meals);
 	printf("[DETAILS]\n");
 	while (++i < table->option.nb)
 		print_philo_state((table->philos) + i, table);

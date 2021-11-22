@@ -160,13 +160,11 @@ int	init_table(t_table *table, t_philo *philo, t_option option)
 	table->forks = malloc(option.nb * sizeof(t_mutex));
 	table->option = option;
 	table->all_alive = 1;
-	//print_addresses(table);
 	if (!philo || !table->forks)
 		return (free_all(table));
 	i = -1;
 	while (++i < option.nb)
 		pthread_mutex_init(&(table->forks[i]), NULL);
 	init_global_mutex(table);
-	//print_mutex_add(table);
 	return (init_table_bis(table, option, time));
 }

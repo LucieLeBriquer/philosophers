@@ -50,19 +50,18 @@ static void	routine_one(t_philo *philo)
 
 void	routine_loop(t_philo *philo)
 {
+	int	status;
+
 	if (philo->fork_left == philo->fork_right)
 	{
 		routine_one(philo);
 		return ;
 	}
-	if (start_eating(philo) == STOP)
-	{
-		pthread_mutex_unlock(&(philo->table->forks[philo->fork_left]));
-		pthread_mutex_unlock(&(philo->table->forks[philo->fork_right]));
-		return ;
-	}
+	status = start_eating(philo);
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_left]));
 	pthread_mutex_unlock(&(philo->table->forks[philo->fork_right]));
+	if (status == STOP)
+		return ;
 	pthread_mutex_lock(&(philo->table->m_nb_meals));
 	philo->nb_meals++;
 	pthread_mutex_unlock(&(philo->table->m_nb_meals));
