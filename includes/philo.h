@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:54:04 by lle-briq          #+#    #+#             */
-/*   Updated: 2021/10/30 16:54:16 by lle-briq         ###   ########.fr       */
+/*   Updated: 2021/11/22 17:56:04 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,14 @@ typedef struct s_philo
 int		parse_option(t_option *option, int argc, char **argv);
 int		print_help(void);
 int		init_table(t_table *table, t_philo *philo, t_option option);
-long	get_time(void);
+void	init_philosophers(t_table *table, t_time time);
 long	get_time_stamp(t_time start);
 void	print_state(t_philo *philo);
 int		waiting(long to_wait, t_table *table);
 void	*routine(void *param);
 int		everybody_alive(t_table *table);
-void	update_state(t_philo *philo, int state);
-int		all_alive_and_hungry(t_table *table);
-void	init_philosophers(t_table *table, t_time time);
 int		everyone_is_full(t_table *table);
+int		all_alive_and_hungry(t_table *table);
+void	update_state(t_philo *philo, int state);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-long	get_time(void)
+static long	get_time(void)
 {
 	t_time	time;
 
