@@ -84,12 +84,6 @@ int		all_alive_and_hungry(t_table *table);
 ** Utils
 */
 
-void	print_states(t_table *table, int i);
-void	print_msg(char *s, int i, t_table *table);
-void	print_philo_state(t_philo *philo, t_table *table);
-void	print_table_state(t_table *table);
-void	print_state_msg2(t_philo *philo, long time_stamp, int id,
-	int *print_end);
 int		everyone_is_full(t_table *table);
 
 #endif

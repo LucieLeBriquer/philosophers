@@ -83,6 +83,7 @@ void	*routine(void *param)
 		if (all_alive_and_hungry(philo->table) == STOP)
 			break ;
 		routine_loop(philo);
+		usleep(100);
 	}
 	return (NULL);
 }
