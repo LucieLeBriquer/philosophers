@@ -30,30 +30,6 @@ long	get_time_stamp(t_time start)
 	return (t - s);
 }
 
-int	everybody_alive(t_table *table)
-{
-	int		i;
-	t_philo	*philo;
-
-	i = -1;
-	while (++i < table->option.nb)
-	{
-		philo = table->philos + i;
-		if (get_time_stamp(philo->last_meal) > table->option.time_die)
-		{
-			pthread_mutex_lock(&(table->m_state));
-			philo->state = DEAD;
-			pthread_mutex_unlock(&(table->m_state));
-			pthread_mutex_lock(&(table->m_all_alive));
-			table->all_alive = 0;
-			pthread_mutex_unlock(&(table->m_all_alive));
-			print_state(philo);
-			return (STOP);
-		}
-	}
-	return (CONTINUE);
-}
-
 int	waiting(long to_wait, t_table *table)
 {
 	long int	current;

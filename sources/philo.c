@@ -37,33 +37,6 @@ void	init_philosophers(t_table *table, t_time time)
 	}
 }
 
-int	all_alive_and_hungry(t_table *table)
-{
-	int	i;
-	int	ok;
-	int	meals;
-	int	nb_meals;
-
-	if (everybody_alive(table) == STOP)
-		return (STOP);
-	pthread_mutex_lock(&(table->m_display));
-	meals = table->option.tot_meals;
-	pthread_mutex_unlock(&(table->m_display));
-	ok = 0;
-	i = -1;
-	while (++i < table->option.nb)
-	{
-		pthread_mutex_lock(&(table->m_nb_meals));
-		nb_meals = table->philos[i].nb_meals;
-		pthread_mutex_unlock(&(table->m_nb_meals));
-		if (nb_meals >= meals && meals != -1)
-			ok++;
-	}
-	if (ok == table->option.nb)
-		return (STOP);
-	return (CONTINUE);
-}
-
 int	everyone_is_full(t_table *table)
 {
 	int	i;
@@ -81,4 +54,37 @@ int	everyone_is_full(t_table *table)
 			return (0);
 	}
 	return (1);
+}
+
+int	everybody_alive(t_table *table)
+{
+	int		i;
+	t_philo	*philo;
+
+	i = -1;
+	while (++i < table->option.nb)
+	{
+		philo = table->philos + i;
+		if (get_time_stamp(philo->last_meal) > table->option.time_die)
+		{
+			pthread_mutex_lock(&(table->m_state));
+			philo->state = DEAD;
+			pthread_mutex_unlock(&(table->m_state));
+			pthread_mutex_lock(&(table->m_all_alive));
+			table->all_alive = 0;
+			pthread_mutex_unlock(&(table->m_all_alive));
+			print_state(philo);
+			return (STOP);
+		}
+	}
+	return (CONTINUE);
+}
+
+int	all_alive_and_hungry(t_table *table)
+{
+	if (everybody_alive(table) == STOP)
+		return (STOP);
+	if (everyone_is_full(table) == 1)
+		return (STOP);
+	return (CONTINUE);
 }

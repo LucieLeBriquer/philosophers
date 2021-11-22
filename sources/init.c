@@ -48,7 +48,7 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 	i = -1;
 	while (++i < option.nb)
 	{
-		philo = &(table->philos[i]);
+		philo = table->philos + i;
 		if (pthread_join(philo->thread, NULL))
 			return (ERROR_THREAD);
 	}
