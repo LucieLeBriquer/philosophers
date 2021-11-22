@@ -103,7 +103,6 @@ static int	init_table_bis(t_table *table, t_option option, t_time time)
 		philo = &(table->philos[i]);
 		if (pthread_join(philo->thread, NULL))
 			return (ERROR_THREAD);
-		printf("thread %d has ended\n", i);
 	}
 	free_all(table);
 	return (SUCCESS);
@@ -168,6 +167,6 @@ int	init_table(t_table *table, t_philo *philo, t_option option)
 	while (++i < option.nb)
 		pthread_mutex_init(&(table->forks[i]), NULL);
 	init_global_mutex(table);
-	print_mutex_add(table);
+	//print_mutex_add(table);
 	return (init_table_bis(table, option, time));
 }

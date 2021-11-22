@@ -29,7 +29,7 @@ void	update_state(t_philo *philo, int state)
 	pthread_mutex_unlock(&(table->m_state));
 }
 
-static int	everyone_is_full(t_table *table)
+int	everyone_is_full(t_table *table)
 {
 	int	i;
 	int	tot_meals;
@@ -83,11 +83,9 @@ void	print_state(t_philo *philo)
 	int			id;
 
 	pthread_mutex_lock(&(philo->table->m_display));
+	id = philo->id;
+	time_stamp = get_time_stamp(philo->start_time);
 	if (!print_end)
-	{
-		id = philo->id;
-		time_stamp = get_time_stamp(philo->start_time);
 		print_state_msg(philo, time_stamp, id, &print_end);
-	}
 	pthread_mutex_unlock(&(philo->table->m_display));
 }

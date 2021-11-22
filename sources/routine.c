@@ -78,13 +78,12 @@ void	*routine(void *param)
 
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0)
-		usleep(500 * philo->table->option.time_eat);
+		usleep(500);
 	while (1)
 	{
 		if (all_alive_and_hungry(philo->table) == STOP)
 			break ;
 		routine_loop(philo);
-		usleep(100);
 	}
 	return (NULL);
 }
