@@ -29,25 +29,6 @@ void	update_state(t_philo *philo, int state)
 	pthread_mutex_unlock(&(table->m_state));
 }
 
-int	everyone_is_full(t_table *table)
-{
-	int	i;
-	int	tot_meals;
-	int	philo_meals;
-
-	i = -1;
-	tot_meals = table->option.tot_meals;
-	while (++i < table->option.nb)
-	{
-		pthread_mutex_lock(&(table->m_nb_meals));
-		philo_meals = table->philos[i].nb_meals;
-		pthread_mutex_unlock(&(table->m_nb_meals));
-		if (philo_meals < tot_meals || tot_meals == -1)
-			return (0);
-	}
-	return (1);
-}
-
 static void	print_state_msg(t_philo *philo, long time_stamp, int id,
 	int *print_end)
 {

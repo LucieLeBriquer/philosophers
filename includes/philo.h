@@ -79,11 +79,7 @@ void	*routine(void *param);
 int		everybody_alive(t_table *table);
 void	update_state(t_philo *philo, int state);
 int		all_alive_and_hungry(t_table *table);
-
-/*
-** Utils
-*/
-
+void	init_philosophers(t_table *table, t_time time);
 int		everyone_is_full(t_table *table);
 
 #endif

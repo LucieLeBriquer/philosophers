@@ -12,25 +12,20 @@
 
 #include "philo.h"
 
-void	get_forks(t_philo *philo, t_table *table)
-{
-	pthread_mutex_lock(&(table->forks[philo->fork_left]));
-	print_state(philo);
-	pthread_mutex_lock(&(table->forks[philo->fork_right]));
-	print_state(philo);
-}
-
 static int	start_eating(t_philo *philo)
 {
 	update_state(philo, FORK);
-	get_forks(philo, philo->table);
+	pthread_mutex_lock(&(philo->table->forks[philo->fork_left]));
+	print_state(philo);
+	pthread_mutex_lock(&(philo->table->forks[philo->fork_right]));
+	print_state(philo);
 	update_state(philo, EATING);
 	print_state(philo);
 	return (waiting(philo->table->option.time_eat, philo->table));
 }
 
 static int	start_sleeping(t_philo *philo)
-{;
+{
 	if (!everybody_alive(philo->table))
 		return (STOP);
 	update_state(philo, SLEEPING);
