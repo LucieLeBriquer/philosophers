@@ -1,13 +1,3 @@
-# Notes
-- recheck les leaks
-- lancer le testeur pour 100 et laisser tourner
-- pour le bonus se renseigner sur les sémaphores (normalement ça ne change pas grand chose)
-- problemes pour beaucoup de philosophes > 30 -> ça a l'air d'être la même pour d'autres collègues -> mais logique d'avoir un décalage 800 200 200 ne fonctionne pas
-
-## Remaining
-- Test with 2 philosophers and check the different times (a death delayed by more than 10ms is unacceptable).
-- Test with your values to check all the rules. Check if a philosopher dies at the right time, if they don't steal forks, etc.
-
 # Correction
 ## Mandatory Part
 ### Error Handling

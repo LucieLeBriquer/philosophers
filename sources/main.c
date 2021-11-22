@@ -15,10 +15,9 @@
 int	main(int argc, char **argv)
 {
 	t_option	option;
-	t_philo		philo;
 	t_table		table;
 
 	if (parse_option(&option, argc, argv))
 		return (print_help());
-	return (init_table(&table, &philo, option));
+	return (init_table(&table, option));
 }

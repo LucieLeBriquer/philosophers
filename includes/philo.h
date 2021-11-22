@@ -70,7 +70,7 @@ typedef struct s_philo
 
 int		parse_option(t_option *option, int argc, char **argv);
 int		print_help(void);
-int		init_table(t_table *table, t_philo *philo, t_option option);
+int		init_table(t_table *table, t_option option);
 void	init_philosophers(t_table *table, t_time time);
 long	get_time_stamp(t_time start);
 void	print_state(t_philo *philo);
